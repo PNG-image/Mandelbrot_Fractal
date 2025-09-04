@@ -1,0 +1,33 @@
+<body>
+    <canvas id='canvas'></canvas>
+    <script>
+        const cvs = document.getElementByID('canvas');
+        const ctx = cvs.getContext('2d');
+        class Number {
+            constructor(real, imag) {
+                this.r = real;
+                this.i = imag;
+            }
+            static add(n1, n2) {
+                return new Number(n1.r + n2.r, n1.i + n2.i);
+            }
+            static sub(n1, n2) {
+                return add(n1, new Number(n2.r * -1, n2.i * -1));
+            }
+            static mult(n1, n2) {
+                return new Number(n1.r * n2.r - n1.i * n2.i, n1.r * n2.i + n1.i * n2.r);
+            }
+            // div not needed
+        }
+        function doFunc(c, max) {
+            //add stuff here
+        }
+        function doFuncs(lim, max, inc) {
+            for (let r = lim[0][0]; r += inc; r <= lim[0][1]) {
+                for (let i = lim[1][1]; i -= inc; i <= lim[1][0]) {
+                    let c = new Number(r, i);
+                }
+            }
+        }
+    </script>
+</body>
