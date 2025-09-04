@@ -1,5 +1,5 @@
 <body>
-    <canvas id='canvas'></canvas>
+    <canvas id='canvas', width='101', height='101'></canvas>
     <script>
         const cvs = document.getElementByID('canvas');
         const ctx = cvs.getContext('2d');
@@ -19,13 +19,28 @@
             }
             // div not needed
         }
-        function doFunc(c, max) {
-            //add stuff here
+        function iterate(c, z) {
+            return Number.add(Number.mult(z, z), c);
         }
-        function doFuncs(lim, max, inc) {
-            for (let r = lim[0][0]; r += inc; r <= lim[0][1]) {
-                for (let i = lim[1][1]; i -= inc; i <= lim[1][0]) {
+        function doFunc(c, max, maxZ) {
+            let z = 0
+            let pastZs = []
+            let tIter = 0
+            for (iterations = 0; iterations <= max; iterations += 1) {
+                z = iterate(c, z)
+                if (z > maxZ || z in pastZs) {
+                    tIter = iterations
+                    break
+                }
+                pastZs.push(z)
+            }
+            return tIter
+        }
+        function doFuncs(lim, max, inc, maxZ) {
+            for (let r = lim[0][0]; r <= lim[0][1];  r += inc) {
+                for (let i = lim[1][1]; i <= lim[1][0];  i -= inc) {
                     let c = new Number(r, i);
+                    console.log(doFunc(c, max, maxZ))
                 }
             }
         }
