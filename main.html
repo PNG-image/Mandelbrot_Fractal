@@ -40,7 +40,10 @@
             for (let r = lim[0][0]; r <= lim[0][1];  r += inc) {
                 for (let i = lim[1][1]; i <= lim[1][0];  i -= inc) {
                     let c = new Number(r, i);
-                    console.log(doFunc(c, max, maxZ))
+                    let res = doFunc(c, max, maxZ);
+                    console.log(res);
+                    ctx.fillStyle = `rgb(0 ${res/maxZ} 0)
+                    ctx.fillRect(51+r, 51-i, 1, 1)
                 }
             }
         }
