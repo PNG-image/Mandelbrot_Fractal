@@ -1,8 +1,10 @@
 <body>
     <canvas id='canvas', width='101', height='101'></canvas>
+    <p id='results'></p>
     <script>
         const cvs = document.getElementByID('canvas');
         const ctx = cvs.getContext('2d');
+        const results = document.getElementById('results');
         class Number {
             constructor(real, imag) {
                 this.r = real;
@@ -42,6 +44,7 @@
                     let c = new Number(r, i);
                     let res = doFunc(c, max, maxZ);
                     console.log(res);
+                    results.innerHTML += `<br> * ${res}`
                     ctx.fillStyle = `rgb(0 ${res/maxZ} 0)
                     ctx.fillRect(51+r, 51-i, 1, 1)
                 }
