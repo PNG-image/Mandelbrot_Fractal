@@ -2,55 +2,60 @@
     <canvas id='canvas', width='101', height='101'></canvas>
     <p id='results'>Results:</p>
     <script>
-        const cvs = document.getElementByID('canvas');
-        const ctx = cvs.getContext('2d');
         const results = document.getElementById('results');
-        class Number {
-            constructor(real, imag) {
-                this.r = real;
-                this.i = imag;
-            }
-            static add(n1, n2) {
-                return new Number(n1.r + n2.r, n1.i + n2.i);
-            }
-            static sub(n1, n2) {
-                return add(n1, new Number(n2.r * -1, n2.i * -1));
-            }
-            static mult(n1, n2) {
-                return new Number(n1.r * n2.r - n1.i * n2.i, n1.r * n2.i + n1.i * n2.r);
-            }
-            // div not needed
-        }
-        function iterate(c, z) {
-            return Number.add(Number.mult(z, z), c);
-        }
-        function doFunc(c, max, maxZ) {
-            let z = 0
-            let pastZs = []
-            let tIter = 0
-            for (iterations = 0; iterations <= max; iterations += 1) {
-                z = iterate(c, z)
-                if (z > maxZ || z in pastZs) {
-                    tIter = iterations
-                    break
+        try {
+            const cvs = document.getElementByID('canvas');
+            const ctx = cvs.getContext('2d');
+            //const results = document.getElementById('results');
+            class Number {
+                constructor(real, imag) {
+                    this.r = real;
+                    this.i = imag;
                 }
-                pastZs.push(z)
+                static add(n1, n2) {
+                    return new Number(n1.r + n2.r, n1.i + n2.i);
+                }
+                static sub(n1, n2) {
+                    return add(n1, new Number(n2.r * -1, n2.i * -1));
+                }
+                static mult(n1, n2) {
+                    return new Number(n1.r * n2.r - n1.i * n2.i, n1.r * n2.i + n1.i * n2.r);
+                }
+                // div not needed
             }
-            return tIter
-        }
-        function doFuncs(lim, max, inc, maxZ) {
-            for (let r = lim[0][0]; r <= lim[0][1];  r += inc) {
-                for (let i = lim[1][1]; i <= lim[1][0];  i -= inc) {
-                    let c = new Number(r, i);
-                    let res = doFunc(c, max, maxZ);
-                    console.log(res);
-                    results.innerHTML += `<br> * ${res}`
-                    ctx.fillStyle = `rgb(0 ${res/maxZ} 0)`
-                    ctx.fillRect(51+r, 51-i, 1, 1)
+            function iterate(c, z) {
+                return Number.add(Number.mult(z, z), c);
+            }
+            function doFunc(c, max, maxZ) {
+                let z = 0
+                let pastZs = []
+                let tIter = 0
+                for (iterations = 0; iterations <= max; iterations += 1) {
+                    z = iterate(c, z)
+                    if (z > maxZ || z in pastZs) {
+                        tIter = iterations
+                        break
+                    }
+                    pastZs.push(z)
+                }
+                return tIter
+            }
+            function doFuncs(lim, max, inc, maxZ) {
+                for (let r = lim[0][0]; r <= lim[0][1];  r += inc) {
+                    for (let i = lim[1][1]; i <= lim[1][0];  i -= inc) {
+                        let c = new Number(r, i);
+                        let res = doFunc(c, max, maxZ);
+                        console.log(res);
+                        results.innerHTML += `<br> * ${res}`
+                        ctx.fillStyle = `rgb(0 ${res/maxZ} 0)`
+                        ctx.fillRect(51+r, 51-i, 1, 1)
+                    }
                 }
             }
+            doFuncs([[-50, 50], [-50, 50]], 100, 1, 10000);
+            results.innerHTML += 'BWAHAHAHAHA'
+        } catch (error) {
+            results += error;
         }
-        doFuncs([[-50, 50], [-50, 50]], 100, 1, 10000);
-        results.innerHTML += 'BWAHAHAHAHA'
     </script>
 </body>
